@@ -1,0 +1,34 @@
+function areBracketsBalanced(str) {
+  const stack = [];
+  const brackets = {
+    '(': ')',
+    '[': ']',
+    '{': '}',
+  };
+
+  for (let char of str) {
+    if (brackets[char]) {
+      // If the character is an opening bracket, push it onto the stack
+      stack.push(char);
+    } else if (Object.values(brackets).includes(char)) {
+      // If the character is a closing bracket
+      const lastBracket = stack.pop();
+
+      // Check if the last bracket on the stack matches the current closing bracket
+      if (brackets[lastBracket] !== char) {
+        return false; // Unbalanced brackets
+      }
+    }
+  }
+
+  // If the stack is empty, all brackets are balanced
+  return stack.length === 0;
+}
+
+// Test the function
+console.log(areBracketsBalanced("()")); // true
+console.log(areBracketsBalanced("({})")); // true
+console.log(areBracketsBalanced("[({})]")); // true
+console.log(areBracketsBalanced("({[})")); // false
+console.log(areBracketsBalanced("Hello (world)")); // true
+console.log(areBracketsBalanced("This is [not balanced] at all]")); // false
